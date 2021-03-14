@@ -1,5 +1,8 @@
 const CFonts = require('cfonts');
 const readlineSync = require('readline-sync');
+const chalk = require('chalk');
+const fetch = require("node-fetch");
+const terminalLink = require('terminal-link');
 
 CFonts.say('finCLI', {
 	font: 'block',              // define the font face
@@ -16,9 +19,9 @@ CFonts.say('finCLI', {
 	env: 'node'                 // define the environment CFonts is being executed in
 });
 
-var input = readlineSync.question("Checkout the latest headlines on: \n1. BitCoin\n2. Ethereum\n3. CryptoCurrency\nUser Input: ");
+var input = readlineSync.question("Checkout the latest headlines on: \n1. BitCoin\n2. Ethereum\n3. CryptoCurrency\n4. Global Finance\n5. Indian Finance\n6. Exit\n\nUser Input: ");
 
-var inpKeyword;
+var inpKeyword = 'Bitcoin';
 if (input == 1) {
 	inpKeyword = 'Bitcoin';
 }
@@ -29,18 +32,68 @@ if (input == 3) {
 	inpKeyword = 'CryptoCurrency';
 }
 if (input == 4) {
-	inpKeyword = 'Global Finance';
+	inpKeyword = 'Finance'; // Global Finance
 }
+var indianNews = false;
 if (input == 5) {
-	inpKeyword = 'Indian Finance';
+	indianNews = true;
+}
+if (input == 6) {
+	var text = chalk.hex('#9370DB');
+	console.log(text.italic("Created by Dhairya Ostwal. See you soon :)\n"));
+	console.log(terminalLink("Click here to know more:", "http://dhairyaostwal.netlify.app/"));
+	return;
 }
 
-var url = 'https://api.currentsapi.services/v1/search?'+'keywords='+inpKeyword+'&language=en&apiKey=';
+var indianNewsURL = 'https://saurav.tech/NewsAPI/top-headlines/category/business/in.json';
 
-// var url = 'https://api.currentsapi.services/v1/latest-news?' +
-// 'language=us&' +
-// var req = new Request(url);
-// fetch(req)
-// .then(function(response) {
-// 		console.log(response.json());
-// })
+const apiKey = null;
+// get your APIKey from below link
+var url = 'https://api.currentsapi.services/v1/search?' + 'keywords=' + inpKeyword + '&language=en&apiKey=' + apiKey;
+
+async function getData() {
+	const response = await fetch(url,
+		{
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		}
+	);
+
+	const data = await response.json();
+	for (let i = 0; i < 5; i++) {
+		console.log(chalk.magentaBright.bold(data.news[i].author));
+		console.log(chalk.yellow.bold(data.news[i].title));
+		console.log(chalk.grey(terminalLink('Click to read', data.news[i].url)));
+		console.log("\n");
+	}
+
+}
+
+
+async function getIndianNewsData() {
+	const response = await fetch(indianNewsURL,
+		{
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		}
+	);
+
+	const data = await response.json();
+	for (let i = 0; i < 5; i++) {
+		console.log(chalk.magentaBright.bold(data.articles[i].source.name));
+		console.log(chalk.yellow.bold(data.articles[i].title));
+		console.log(chalk.grey(terminalLink('Click to read', data.articles[i].url)));
+		console.log("\n");
+	}
+}
+
+if (indianNews) {
+	getIndianNewsData();
+}
+else {
+	getData();
+}
