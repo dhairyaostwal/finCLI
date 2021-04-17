@@ -19,6 +19,8 @@ Finance CLI for Developers
 
 ## Instructions to run:
 
+**Get your API Key from [here](https://currentsapi.services/en)**
+
 ```
 1. Clone repository
 2. Open directory path in terminal

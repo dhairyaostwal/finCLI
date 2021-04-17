@@ -1,5 +1,5 @@
 var inpKeyword = 'Bitcoin';
-const apiKey = 'MjqbVnKO6CbaiH5g7ys1c20XMu5-uH5XxdsG0xDlxBQJlPwp';
+const apiKey = '';
 
 var url = 'https://api.currentsapi.services/v1/search?' + 'keywords=' + inpKeyword + '&language=en&apiKey=' + apiKey;
 
