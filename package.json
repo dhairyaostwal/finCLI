@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cfonts": "^2.9.2",
+    "cfonts": "^2.9.3",
     "node-fetch": "^2.6.1",
     "readline-sync": "^1.4.10",
     "terminal-link": "^3.0.0"
