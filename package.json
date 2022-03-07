@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "cfonts": "^2.10.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.2.2",
     "readline-sync": "^1.4.10",
     "terminal-link": "^3.0.0"
   }
